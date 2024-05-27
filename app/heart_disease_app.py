@@ -1,11 +1,11 @@
 import time
+
+import joblib
 import pandas as pd
 import streamlit as st
-import pickle
 
 # Load the pre-trained model
-with open('../model/model.pkl', 'rb') as file:
-    model = pickle.load(file)
+model = joblib.load('../model/model_rfc.joblib')
 
 # Define the column names
 columns = [
