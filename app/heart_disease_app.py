@@ -1,3 +1,30 @@
+"""
+Heart Disease Evaluation App
+
+This module implements a web application using Streamlit
+that allows users to assess their risk of having
+coronary heart disease (CHD) or myocardial infarction (MI)
+based on a variety of personal health indicators.
+
+Functions:
+- get_input_from_user(): Collects input data from the user.
+- display_user_inputs(df): Displays the user inputs.
+
+Application Flow:
+1. Load the pre-trained model.
+2. Define the column names for the input DataFrame.
+3. Set up the Streamlit app interface,
+   including the title, image, and introductory text.
+4. Collect user input parameters through the sidebar interface.
+5. Display the collected user input parameters in expandable sections.
+6. When the user clicks the 'Predict' button,
+   use the pre-trained model to make predictions and display the results.
+
+Usage:
+To run the app, execute the script using a Streamlit command such as:
+    streamlit run path_to_this_script.py
+"""
+
 import time
 
 import joblib
@@ -16,8 +43,10 @@ columns = [
 ]
 
 st.title('Heart Disease Evaluation App')
-st.image("https://assets.clevelandclinic.org/transform/LargeFeatureImage/1b3152fa-e4e8-49fc-98b4-b4e9d6dc1422"
-         "/HeartDiseaseFactors-1345978894-770x533-1_jpg", use_column_width=True)
+st.image(
+    "https://assets.clevelandclinic.org/transform/LargeFeatureImage/"
+    "1b3152fa-e4e8-49fc-98b4-b4e9d6dc1422/HeartDiseaseFactors-1345978894-770x533-1_jpg",
+    use_column_width=True)
 st.markdown("""
 <style>
 .intro-text {
@@ -37,28 +66,42 @@ st.sidebar.header('User Input Parameters')
 
 
 def get_input_from_user():
+    """
+    Collects input data from the user and returns it as a DataFrame.
+
+    Returns:
+        pd.DataFrame: A DataFrame containing user input data.
+    """
     with st.sidebar.expander("General information"):
         sex = st.selectbox('Sex', [0, 1], format_func=lambda x: 'Male' if x == 1 else 'Female')
-        age_category = st.selectbox('Age Category', list(range(1, 14)), format_func=lambda x: f'Category {x}')
-        race = st.selectbox('Race', list(range(1, 6)), format_func=lambda x: f'Race {x}')
+        age_category = st.selectbox(
+            'Age Category', list(range(1, 14)), format_func=lambda x: f'Category {x}'
+        )
+        race = st.selectbox(
+            'Race', list(range(1, 6)), format_func=lambda x: f'Race {x}'
+        )
         bmi = st.slider('Body Mass Index (BMI)', 10.0, 50.0, 25.0)
-        gen_health = st.selectbox('Would you say that in general your health is...', list(range(1, 6)),
+        gen_health = st.selectbox(
+            'Would you say that in general your health is...', list(range(1, 6)),
                                           format_func=lambda x: f'Health Level {x}')
 
     with st.sidebar.expander("Addictions"):
-        smoking = st.selectbox('Have you smoked at least 100 cigarettes in your entire life?', [0, 1],
+        smoking = st.selectbox(
+            'Have you smoked at least 100 cigarettes in your entire life?', [0, 1],
                                        format_func=lambda x: 'Yes' if x == 1 else 'No')
         alcohol_drinking = st.selectbox('Do you drink alcohol regularly?', [0, 1],
-                                                format_func=lambda x: 'Yes' if x == 1 else 'No')
+                                            format_func=lambda x: 'Yes' if x == 1 else 'No')
 
     with st.sidebar.expander("Medical history"):
         stroke = st.selectbox('Have you ever had a stroke?', [0, 1],
                                       format_func=lambda x: 'Yes' if x == 1 else 'No')
-        diabetic = st.selectbox('Are you diabetic?', [0, 1], format_func=lambda x: 'Yes' if x == 1 else 'No')
-        asthma = st.selectbox('Do you have asthma?', [0, 1], format_func=lambda x: 'Yes' if x == 1 else 'No')
+        diabetic = st.selectbox(
+            'Are you diabetic?', [0, 1], format_func=lambda x: 'Yes' if x == 1 else 'No')
+        asthma = st.selectbox(
+            'Do you have asthma?', [0, 1], format_func=lambda x: 'Yes' if x == 1 else 'No')
         kidney_disease = st.selectbox(
-            'Do you have kidney disease (not including kidney stones, bladder infection or incontinence)?', [0, 1],
-            format_func=lambda x: 'Yes' if x == 1 else 'No')
+            'Do you have any kidney disease?',
+            [0, 1], format_func=lambda x: 'Yes' if x == 1 else 'No')
         skin_cancer = st.selectbox('Do you have skin cancer?', [0, 1],
                                            format_func=lambda x: 'Yes' if x == 1 else 'No')
 
@@ -69,7 +112,8 @@ def get_input_from_user():
                                             format_func=lambda x: 'Yes' if x == 1 else 'No')
 
     with st.sidebar.expander("Way of life"):
-        physical_activity = st.selectbox('Do you engage in physical activity other than your regular job?', [0, 1],
+        physical_activity = st.selectbox(
+            'Do you engage in physical activity other than your regular job?', [0, 1],
                                                  format_func=lambda x: 'Yes' if x == 1 else 'No')
         sleep_time = st.slider('Sleep Time (hours) in a 24-hour period', 0, 24, 8)
 
