@@ -32,7 +32,7 @@ import pandas as pd
 import streamlit as st
 
 # Load the pre-trained model
-model = joblib.load('../model/model_rfc.joblib')
+model = joblib.load('model/model_rfc.joblib')
 
 # Define the column names
 columns = [
