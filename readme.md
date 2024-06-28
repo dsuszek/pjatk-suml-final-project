@@ -10,6 +10,11 @@ http://localhost:8501
 ```
 <img width="1601" alt="Zrzut ekranu 2024-06-29 o 00 50 25" src="https://github.com/dsuszek/pjatk-suml-final-project/assets/149255804/580d1d18-79aa-4a2d-bb29-5a9fa5165c43">
 
+z panelu po lewej stronie możemy wprowadzić interesujące nas wartości
+
+Gdy już wszystko uzupełnimy możemy wcisnąć przycisk **Predict** aby poznać prawdopodobieństwo
+<img width="1590" alt="Zrzut ekranu 2024-06-29 o 01 00 16" src="https://github.com/dsuszek/pjatk-suml-final-project/assets/149255804/cf1cfed0-08cb-4e9f-a997-faa564e7ef94">
+
 
 
 # Uruchamianie osobnych elementów aplikacji
