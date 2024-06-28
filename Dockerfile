@@ -1,22 +1,42 @@
-# Użyj obrazu bazowego Python
-FROM python:3.9-slim
+ARG BASE_IMAGE=python:3.9-slim
+FROM $BASE_IMAGE as runtime-environment
 
-# Ustaw katalog roboczy
-WORKDIR /app
+# Install build dependencies and Java
+RUN apt-get update && \
+    apt-get install -y gcc python3-dev default-jdk procps && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Skopiuj plik requirements.txt do katalogu roboczego
-COPY requirements.txt .
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME=/usr/lib/jvm/default-java
+ENV PATH=$JAVA_HOME/bin:$PATH
 
-# Zainstaluj zależności
-RUN pip install --no-cache-dir -r requirements.txt
+# Install project requirements
+COPY requirements.txt /tmp/requirements.txt
+RUN python -m pip install -U "pip>=21.2,<23.2"
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm -f /tmp/requirements.txt
 
-# Skopiuj katalogi app, data, model do katalogu roboczego
-COPY app ./app
-COPY data ./data
-COPY model ./model
+# Add kedro user
+ARG KEDRO_UID=999
+ARG KEDRO_GID=0
+RUN groupadd -f -g ${KEDRO_GID} kedro_group && \
+    useradd -m -d /home/kedro_docker -s /bin/bash -g ${KEDRO_GID} -u ${KEDRO_UID} kedro_docker
 
-# Otwórz port 8501 (domyślny port Streamlit)
-EXPOSE 8501
+WORKDIR /home/kedro_docker
+USER kedro_docker
 
-# Uruchom aplikację Streamlit
-CMD ["streamlit", "run", "app/heart_disease_app.py"]
+FROM runtime-environment
+
+# Copy the whole project except what is in .dockerignore
+ARG KEDRO_UID=999
+ARG KEDRO_GID=0
+COPY --chown=${KEDRO_UID}:${KEDRO_GID} . .
+
+EXPOSE 8888
+
+# Ustaw skrypt startowy jako wykonywalny
+RUN chmod +x start.sh
+
+# Uruchom skrypt startowy
+CMD ["./start.sh"]
+

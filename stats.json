@@ -1,0 +1,1 @@
+{"health_data": {"rows": 319795, "columns": 18, "file_size": 24030157}, "preprocessed_health": {"rows": 319765, "columns": 18, "file_size": 2934548}, "X_train": {"rows": 255812, "columns": 17}, "X_test": {"rows": 63953, "columns": 17}}
