@@ -5,5 +5,5 @@ docker pull s22660/heart-disease-suml
 ```
 następnie
 ```
-docker run -p 8501:8501 heart-disease-suml
+docker run -p 8501:8501 s22660/heart-disease-suml
 ```
