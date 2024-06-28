@@ -32,7 +32,7 @@ import pandas as pd
 import streamlit as st
 
 # Load the pre-trained model
-model = joblib.load('model/model_rfc.joblib')
+model = joblib.load('../model/model_rfc.joblib')
 
 # Define the column names
 columns = [
@@ -73,17 +73,30 @@ def get_input_from_user():
         pd.DataFrame: A DataFrame containing user input data.
     """
     with st.sidebar.expander("General information"):
+        age_categories = [
+            '18-24', '25-29', '30-34', '35-39', '40-44',
+            '45-49', '50-54', '55-59', '60-64', '65-69',
+            '70-74', '75-79', '80 or older'
+        ]
+
         sex = st.selectbox('Sex', [0, 1], format_func=lambda x: 'Male' if x == 1 else 'Female')
         age_category = st.selectbox(
-            'Age Category', list(range(1, 14)), format_func=lambda x: f'Category {x}'
+            'Age Category', age_categories
         )
+        races = [
+            'White', 'Black', 'Asian', 'American Indian / Alaskan Native', 'Other', 'Hispanic'
+        ]
         race = st.selectbox(
-            'Race', list(range(1, 6)), format_func=lambda x: f'Race {x}'
+            'Race', races
         )
         bmi = st.slider('Body Mass Index (BMI)', 10.0, 50.0, 25.0)
+
+        gen_health_options = [
+            'Very good', 'Fair', 'Good', 'Poor','Excellent'
+        ]
         gen_health = st.selectbox(
-            'Would you say that in general your health is...', list(range(1, 6)),
-                                          format_func=lambda x: f'Health Level {x}')
+            'Would you say that in general your health is...', gen_health_options
+        )
 
     with st.sidebar.expander("Addictions"):
         smoking = st.selectbox(
@@ -95,8 +108,14 @@ def get_input_from_user():
     with st.sidebar.expander("Medical history"):
         stroke = st.selectbox('Have you ever had a stroke?', [0, 1],
                                       format_func=lambda x: 'Yes' if x == 1 else 'No')
+
+        diabetic_options = [
+            'Yes', 'No', 'No, borderline diabetes','Yes (during pregnancy)'
+        ]
         diabetic = st.selectbox(
-            'Are you diabetic?', [0, 1], format_func=lambda x: 'Yes' if x == 1 else 'No')
+            'Are you diabetic?', diabetic_options
+        )
+
         asthma = st.selectbox(
             'Do you have asthma?', [0, 1], format_func=lambda x: 'Yes' if x == 1 else 'No')
         kidney_disease = st.selectbox(
