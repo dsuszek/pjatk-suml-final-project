@@ -220,5 +220,5 @@ if st.button('Predict'):
 
         # Display the probabilities of being positive and negative
         st.subheader('Prediction Probability')
-        st.write(f'Probability of being positive: {prediction_proba[0][1]:.2f}')
-        st.write(f'Probability of being negative: {prediction_proba[0][0]:.2f}')
+        st.write(f'Probability of being positive: {prediction_proba[0][1] * 100:.2f}%')
+        st.write(f'Probability of being negative: {prediction_proba[0][0] * 100:.2f}%')
