@@ -4,6 +4,13 @@ Aby uruchomić całą aplikacje należy wpisać w konsoli następującą komend�
 ```
 docker pull s22660/zawal-serca && docker run -p 8501:8501 s22660/zawal-serca
 ```
+Następnie wchodzimy w link wyświetlony w konsoli
+```
+http://localhost:8501
+```
+<img width="1601" alt="Zrzut ekranu 2024-06-29 o 00 50 25" src="https://github.com/dsuszek/pjatk-suml-final-project/assets/149255804/580d1d18-79aa-4a2d-bb29-5a9fa5165c43">
+
+
 
 # Uruchamianie osobnych elementów aplikacji
 
