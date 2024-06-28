@@ -1,9 +1,5 @@
 # Jak uruchomić?
-wpisz w konsoli następujące komendy:
+wpisz w konsoli następującą komendę:
 ```
-docker pull s22660/heart-disease-suml
-```
-następnie
-```
-docker run -p 8501:8501 s22660/heart-disease-suml
+docker pull s22660/heart-disease-suml && docker run -p 8501:8501 s22660/heart-disease-suml
 ```
